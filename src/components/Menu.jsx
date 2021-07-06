@@ -22,19 +22,19 @@ const Menu = () => {
   }
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" className="container">
       <Navbar.Brand href="#home" className="ms-3">
         <span className={styles.letraM}>M</span>
         <span className={styles.letraH}>H</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
+        <Nav className="ms-auto">
           <Link className="nav-link ms-3" to="/">Inicio</Link>
           {!usuario ? (<Link className="nav-link ms-3" to="/login">Login</Link>) : null}
           {usuario === "usuario@admin.com" ? (<Link className="nav-link ms-3" to="/admin">Admin</Link>) : null}
         </Nav>
-      {usuario ? (<Button variant="danger" className="ms-auto me-3" onClick={cerrarSesion}>Cerrar sesión</Button>) : null}
+        {usuario ? (<Button variant="danger" className="ms-3 me-3" onClick={cerrarSesion}>Cerrar sesión</Button>) : null}
       </Navbar.Collapse>
     </Navbar>
   );
