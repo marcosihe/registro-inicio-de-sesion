@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { auth } from "../firebaseConfig";
+import { useHistory } from "react-router";
 
 const Login = () => {
+  const historial = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -11,10 +13,7 @@ const Login = () => {
     e.preventDefault();
     
     auth.createUserWithEmailAndPassword(email, password)
-      .then( (resp) => {
-          console.log(resp);
-          alert("Registro correcto :)")
-      })
+      .then( (resp) => historial.push('/'))
       .catch(e => {
       //auth/invalid-email
       if (e.code === "auth/invalid-email") {
@@ -29,7 +28,7 @@ const Login = () => {
 
   const handleLogin = () => {
       auth.signInWithEmailAndPassword(email, password)
-      .then( (res) => console.log(res) )
+      .then( (res) => historial.push('/') )
       .catch( (err) => {
           console.log(err);
           if(err.code === "auth/wrong-password"){

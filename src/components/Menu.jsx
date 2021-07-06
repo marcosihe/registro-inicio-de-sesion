@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styles from "../components/Menu.module.css";
 import { auth } from "../firebaseConfig";
 
 const Menu = () => {
+  const historial = useHistory();
   const [usuario, setUsuario] = useState(null);
   useEffect( () => {
     auth.onAuthStateChanged( (user) => {
       if (user) {
         setUsuario(user.email);
-        console.log(user.email);
       }
     } )
   },[])
@@ -18,6 +18,7 @@ const Menu = () => {
   const cerrarSesion = () => {
     auth.signOut();
     setUsuario(null);
+    historial.push('/');
   }
 
   return (
