@@ -1,9 +1,25 @@
-import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styles from "../components/Menu.module.css";
+import { auth } from "../firebaseConfig";
 
 const Menu = () => {
+  const [usuario, setUsuario] = useState(null);
+  useEffect( () => {
+    auth.onAuthStateChanged( (user) => {
+      if (user) {
+        setUsuario(user.email);
+        console.log(user.email);
+      }
+    } )
+  },[])
+
+  const cerrarSesion = () => {
+    auth.signOut();
+    setUsuario(null);
+  }
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand href="#home" className="ms-3">
@@ -13,18 +29,11 @@ const Menu = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link className="nav-link" to="/">
-            Inicio
-          </Link>
-
-          <Link className="nav-link" to="/login">
-            Login
-          </Link>
-
-          <Link className="nav-link" to="/admin">
-            Admin
-          </Link>
+          <Link className="nav-link ms-3" to="/">Inicio</Link>
+          <Link className="nav-link ms-3" to="/login">Login</Link>
+          <Link className="nav-link ms-3" to="/admin">Admin</Link>
         </Nav>
+      {usuario ? (<Button variant="danger" className="ms-auto me-3" onClick={cerrarSesion}>Cerrar sesión</Button>) : null}
       </Navbar.Collapse>
     </Navbar>
   );
