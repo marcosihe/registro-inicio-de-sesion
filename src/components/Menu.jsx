@@ -31,8 +31,8 @@ const Menu = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Link className="nav-link ms-3" to="/">Inicio</Link>
-          <Link className="nav-link ms-3" to="/login">Login</Link>
-          <Link className="nav-link ms-3" to="/admin">Admin</Link>
+          {!usuario ? (<Link className="nav-link ms-3" to="/login">Login</Link>) : null}
+          {usuario === "usuario@admin.com" ? (<Link className="nav-link ms-3" to="/admin">Admin</Link>) : null}
         </Nav>
       {usuario ? (<Button variant="danger" className="ms-auto me-3" onClick={cerrarSesion}>Cerrar sesión</Button>) : null}
       </Navbar.Collapse>
